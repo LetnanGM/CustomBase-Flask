@@ -1,0 +1,7 @@
+__pycache__/
+.env
+.ruff_cache
+assets/logs/Application/
+assets/logs/guardian/
+assets/logs/protections/
+assets/logs/Protector/
