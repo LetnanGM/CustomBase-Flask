@@ -1,16 +1,13 @@
 from data.configuration.internal import ServerConfig
-from share.support.ui.webapp.server import FlaskServer
-from application.bootstrap import WebController
+from application.bootstrap import WebController, UI, Server
 import os
 
 __all__ = ["ServerConfig"]
 
 BASE = os.path.abspath(os.path.join(os.getcwd(), "application/ui/WebUI"))
 
-class server:
+class server(UI):
     def __init__(self, config: ServerConfig = None) -> None:
-        self._new_program()
-        
         self._config = config if config else None
         
         self._template_folder = BASE + "\\frontend"
@@ -18,13 +15,6 @@ class server:
         self._debug = False
         
         self._set_config()
-        
-    def _new_program(self) -> None:
-        from share.shared.logger.print import Logger
-        current_object = Logger()
-        current_object.debug(f"\n{'-'*50}\nNEW PROCESS STARTED!\n{'-'*50}\n", flag="SYSTEM")
-        
-        del current_object
     
     def _set_config(self) -> bool:
         
@@ -44,5 +34,6 @@ class server:
         # load plugin with WC
         WebController()()
         
-        instance = FlaskServer(config=self._config)
+        instance = Server()(config=self._config)
+        instance.setup()
         instance.run() # run server

@@ -18,14 +18,9 @@ class ServerApp(ABC):
         self.app: type = (
             None  # set your instance service here before route or start server
         )
-
+        
     @abstractmethod
-    def _configure_app(self) -> None:
-        """Configure Server Application"""
-        self.logger.info("Server App configured.")
-
-    @abstractmethod
-    def _setup(self) -> None:
+    def setup(self) -> None:
         """
         Setup routes and blueprints
         """
@@ -44,6 +39,7 @@ class ServerApp(ABC):
         """
         self.logger.info(f"Starting server on {self.config.host}:{self.config.port}")
         self.logger.info(f"Debug mode: {'ON' if self.config.debug else 'OFF'}")
+        pass
 
     def get_instance(self) -> None:
         """Return instance server for external use"""

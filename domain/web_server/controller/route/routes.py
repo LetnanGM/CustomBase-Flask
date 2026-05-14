@@ -2,19 +2,54 @@ from data.configuration.internal.server.service import Service
 from share.shared.logger.server_logger import ServerLogger
 from flask import Flask, render_template, jsonify, request
 
+from functools import wraps
+import uuid
+
+class routeState:
+    cache: dict = {}
+    routes: dict = {}
+    logger: ServerLogger = None
+
+class route:
+    def __init__(self):
+        self._log = routeState.logger
+    
+    def register(self, path: str, method=["GET"]) -> None:
+        """
+        
+        """
+        if not path:
+            raise ValueError("path are not recognized")
+        
+        def decorator(func) :    
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                routeState.routes[str(uuid.uuid4())] = {
+                    "path": path,
+                    "method": method,
+                    "func": func
+                }
+                
+                self._log.debug(f"routes '{path}' loggined.")
+            return wrapper
+        
+        return decorator
+    
 
 class RouteManager:
     """Manages route registration for the Flask app"""
 
     def __init__(self, app: Flask, logger: ServerLogger):
+        routeState.logger = logger
+        
         self.app = app
         self.logger = logger
-        Service()
 
     def register_routes(self) -> None:
         """Register all application routes"""
         self._register_main_request()
         self._register_main_routes()
+        
         self.logger.info("All routes registered successfully")
 
     def _register_main_request(self) -> None:

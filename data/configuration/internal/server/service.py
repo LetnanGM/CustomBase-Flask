@@ -9,9 +9,7 @@ class Service:
     MAINTENANCE = False
     
     def __call__(*args, **kwargs) -> None:
-        Service.endpoints_load()
-        
-        return "Service Loaded!"
+        pass
     
     @property
     def to_dict() -> None:
@@ -24,21 +22,3 @@ class Service:
             "status": Service.STATUS,
             "endpoints": Service.ENDPOINTS
         }
-    
-    @staticmethod
-    def endpoints_load() -> Dict:
-        import json
-        
-        with open("./endpoints.json", "r") as endp:
-            Service.ENDPOINTS = json.load(endp)
-            
-        return Service.ENDPOINTS
-    
-    @staticmethod
-    def endpoints_write() -> Dict:
-        import json
-        
-        with open("./endpoints.json", "w") as endp:
-            json.dump(Service.ENDPOINTS, endp, indent=4)
-            
-    

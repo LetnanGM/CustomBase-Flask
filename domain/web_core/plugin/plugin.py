@@ -1,10 +1,19 @@
 from share.shared.logger.print import Logger
-from share.support.ui.webapp.blueprint.blueprint import bpm
+from application.bootstrap import blueprint
 from data.configuration.internal.server.security import SECURITY_ALTAR, GUARDIAN_CRASH
+
+register = blueprint.registerFunc()
+
+class pluginModel:
+    public_plugin = "domain\\web_core\\plugin\\public"
+    module_package = "domain.web_core.plugin.public"
+    main_package = "main"
+    
+    setup_function: str = "setup_me"
 
 class plugin:
     def __init__(self) -> None:
-        self._blueprint = bpm()
+        self._blueprint = blueprint.BlueprintManager()
         self._log = Logger() # Application Logger
 
     def _internal(self) -> bool:
@@ -12,11 +21,11 @@ class plugin:
         from .private import guardian
             
         if SECURITY_ALTAR:
-            self._blueprint.register_queue(Security.setup)
+            register(Security.setup)
             self._log.debug("'SecurityMiddleware' internal package registered!")
                 
         if GUARDIAN_CRASH:
-            self._blueprint.register_queue(guardian.setup)
+            register(guardian.setup)
             self._log.debug("'Guardian_Crash' internal package registered!")
             
             
@@ -29,7 +38,7 @@ class plugin:
         import os
         import importlib
         
-        path = os.path.abspath(os.path.join(os.getcwd(), "domain\\web_core\\plugin\\public"))
+        path = os.path.abspath(os.path.join(os.getcwd(), pluginModel.public_plugin))
         plugin_external = os.listdir(path)
         
         if not plugin_external:
@@ -40,21 +49,24 @@ class plugin:
             self._log.debug(f"Trying load '{plugin}'..")
             if os.path.isdir(plugin_path):
                 try:
-                    module_name = f"domain.web_core.plugin.public.{plugin}.main"
+                    module_name = pluginModel.module_package + f".{plugin}." + pluginModel.main_package
                     module = importlib.import_module(module_name)
                     self._log.debug(f"[{plugin}]: detected object module '{module.__name__}', finding 'setup_me'..")
                     
                     for attr in dir(module):
                         obj = getattr(module, attr)
                         if isinstance(obj, type):
-                            if hasattr(obj, "setup_me"):
-                                self._log.debug(f"[{plugin}]:{obj.__name__}: setup_me finded! object registered into Queue.")
+                            if hasattr(obj, pluginModel.setup_function):
+                                self._log.debug(f"[{plugin}]:{obj.__name__}: {pluginModel.setup_function} finded! object registered into Queue.")
                                 instance = obj()
-                                self._blueprint.register_queue(instance.setup_me)
+                                
+                                # confused here :( i just want 'setup_me' can modified by pluginModel
+                                register(instance.setup_me)
                             else:
-                                self._log.debug(f"[{plugin}]:{obj.__name__}: object doesn't have 'setup_me' function, skiped!")
+                                self._log.debug(f"[{plugin}]:{obj.__name__}: object doesn't have '{pluginModel.setup_function}' function, skiped!")
                         else:
                             continue
+                        
                 except Exception as e:
                     print(f"[ERROR:PLUGIN]: > '{plugin}' have error '{e}'.")
             else:

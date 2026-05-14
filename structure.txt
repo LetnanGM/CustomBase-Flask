@@ -1,0 +1,116 @@
+├───.ruff_cache
+│   └───0.15.1
+├───application
+│   ├───controller
+│   └───ui
+│       └───WebUI
+│           ├───frontend
+│           └───static
+├───assets
+│   └───logs
+│       ├───Application
+│       ├───guardian
+│       ├───protections
+│       └───Protector
+│           ├───chainring
+│           ├───CSRF
+│           ├───inputvalidator
+│           ├───OBSecurity
+│           ├───protect
+│           ├───RateLimiter
+│           └───SecurityMiddleware
+├───data
+│   ├───configuration
+│   │   ├───external
+│   │   └───internal
+│   │       ├───client
+│   │       ├───server
+│   │       └───system
+│   ├───database
+│   └───temp
+├───domain
+│   ├───hooks
+│   │   └───core
+│   └───web_core
+│       ├───controller
+│       ├───data
+│       │   └───configuration
+│       │       ├───security
+│       │       └───sys
+│       ├───plugin
+│       │   ├───private
+│       │   │   ├───crashguard
+│       │   │   ├───security
+│       │   │   │   └───middleware
+│       │   │   └───serverHealth
+│       │   └───public
+│       │       └───test
+│       ├───protector
+│       │   ├───auth
+│       │   │   └───factor
+│       │   ├───csrf
+│       │   │   └───csrf
+│       │   ├───errorpage
+│       │   ├───input
+│       │   ├───obsec
+│       │   └───ratelimit
+│       ├───rendering
+│       └───utils
+│           ├───crypto
+│           ├───decorators
+│           ├───extractor
+│           ├───logging
+│           ├───request
+│           ├───server
+│           └───validator
+│               └───header
+├───infrastructure
+│   ├───database
+│   │   └───jsonDB
+│   │       └───components
+│   └───services
+├───share
+│   ├───contract
+│   │   ├───database
+│   │   ├───file
+│   │   ├───logger
+│   │   ├───model
+│   │   ├───serverapp
+│   │   └───ui
+│   ├───foundation
+│   │   ├───libs
+│   │   │   ├───component
+│   │   │   └───package_lib
+│   │   │       └───test
+│   │   └───requester
+│   ├───shared
+│   │   ├───exceptions
+│   │   │   └───child
+│   │   ├───handler
+│   │   ├───hook
+│   │   └───logger
+│   │       └───components
+│   └───support
+│       ├───file
+│       ├───generator
+│       ├───os
+│       │   └───wrapSyntax
+│       ├───parser
+│       ├───process
+│       ├───style
+│       ├───time
+│       ├───ui
+│       │   ├───console
+│       │   ├───selector
+│       │   │   └───components
+│       │   │       ├───answerkit
+│       │   │       ├───childprocess
+│       │   │       ├───execute
+│       │   │       ├───find
+│       │   │       └───model
+│       │   └───webapp
+│       │       ├───blueprint
+│       │       └───route
+│       └───validator
+└───test
+

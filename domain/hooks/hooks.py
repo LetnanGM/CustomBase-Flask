@@ -16,9 +16,9 @@ import asyncio
 import logging
 from typing import Callable
 
-from .event import EventSystem
-from .eventbus import EventBus
-from .model import (Event, Priority, PropagationError)
+from .core.event import EventSystem
+from .core.eventbus import EventBus
+from .core.model import (Event, Priority, PropagationError)
 
 __all__ = ["Event", "Priority", "PropagationError", "EventBus", "EventSystem"]
 

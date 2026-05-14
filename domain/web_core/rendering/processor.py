@@ -1,6 +1,24 @@
-from typing import Dict, Any
+from typing import Dict, Any, Callable, Type
+from pydantic import BaseModel, field_validator
 
-_database = {}
+class processorState:
+    _database = {}
+    
+class Item(BaseModel):
+    label : str
+    object : Any | Callable | Type
+    
+    @field_validator("object")
+    def object_validation(object: Any):
+        if not isinstance(object, Any | Callable | Type):
+            return "UNKNOWN"
+        
+        return object
+    
+    @field_validator("label")
+    def label_sanitizer(label: str) -> str:
+        import bleach
+        return bleach.clean(label)
 
 class ContextProcessor:
     __TITLE__ = "ContextProcessor Flask Manager"
@@ -16,7 +34,7 @@ class ContextProcessor:
     def main_context_register(self):
         @self.app.context_processor
         def inject_dynamic_context():
-            return _database
+            return processorState._database
         
     def main_processor_register(self):
         self.main_context_register()
@@ -27,7 +45,7 @@ class RegistryContextProcessor:
 
     @property
     def all(self) -> Dict[str, Any]:
-        return _database
+        return processorState._database
     
     @staticmethod
     def register(key: str, value: Any) -> bool:
@@ -45,7 +63,8 @@ class RegistryContextProcessor:
         """
         if not value:
             return False
+        object = Item(label=key, object=value)
         
-        _database[key] = value
+        processorState._database[object.label] = object.object
         
         return True
