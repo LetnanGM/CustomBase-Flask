@@ -5,16 +5,20 @@ from dataclasses import dataclass, field
 # global model
 LoadTarget = Union[type, Callable]
 
+
 class RegistrationPriority(IntEnum):
     """Urutan registrasi blueprint. Nilai lebih kecil = lebih awal."""
-    CRITICAL = 0   # auth, error handlers
-    HIGH     = 10  # core feature routes
-    NORMAL   = 20  # fitur biasa
-    LOW      = 30  # optional / plugin
+
+    CRITICAL = 0  # auth, error handlers
+    HIGH = 10  # core feature routes
+    NORMAL = 20  # fitur biasa
+    LOW = 30  # optional / plugin
+
 
 @dataclass(frozen=True)
 class BlueprintEntry:
     """Satu unit blueprint yang akan diregistrasi."""
+
     target: LoadTarget
     priority: RegistrationPriority = RegistrationPriority.NORMAL
     tags: frozenset[str] = field(default_factory=frozenset)
@@ -35,6 +39,7 @@ class RegistrationHooks:
             on_error=lambda e, ex: sentry.capture(ex),
         )
     """
-    before:   Optional[Callable[[BlueprintEntry], None]] = None
-    after:    Optional[Callable[[BlueprintEntry], None]] = None
+
+    before: Optional[Callable[[BlueprintEntry], None]] = None
+    after: Optional[Callable[[BlueprintEntry], None]] = None
     on_error: Optional[Callable[[BlueprintEntry, Exception], None]] = None

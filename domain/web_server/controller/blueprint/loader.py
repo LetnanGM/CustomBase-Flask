@@ -2,6 +2,7 @@ from .model import BlueprintEntry, LoadTarget
 from typing import Callable
 import inspect
 
+
 class BlueprintLoader:
     """
     Memuat satu blueprint entry ke dalam Flask app.
@@ -9,8 +10,9 @@ class BlueprintLoader:
     Strategy pattern: tambahkan `_load_*` baru untuk mendukung
     tipe target tambahan tanpa menyentuh logika utama.
     """
+
     from flask import Flask
-    
+
     def __init__(self, app: Flask) -> None:
         self._app = app
 
@@ -37,9 +39,7 @@ class BlueprintLoader:
             self._load_callable(target)
 
         else:
-            raise TypeError(
-                f"Target '{target}' bukan class atau callable yang valid."
-            )
+            raise TypeError(f"Target '{target}' bukan class atau callable yang valid.")
 
     # ------------------------------------------------------------------
     # Private helpers — deteksi tipe
@@ -75,4 +75,3 @@ class BlueprintLoader:
             func(app=self._app)
         else:
             func()
-

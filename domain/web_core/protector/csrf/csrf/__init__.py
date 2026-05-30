@@ -1,5 +1,5 @@
 from .validate import Validate
-from .model import (TokenMetadata, CSRFConf, CSRFViolation, _PrivModel, CSRFLogger)
+from .model import TokenMetadata, CSRFConf, CSRFViolation, _PrivModel, CSRFLogger
 from .csrfmod import CSRFHelper
 from .detector import Detector
 

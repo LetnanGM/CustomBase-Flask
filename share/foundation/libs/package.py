@@ -10,57 +10,60 @@ modules: dict = {}
 cached: dict = {}
 alias: dict = {}
 
+
 class _Registry:
-    def __init__(self): 
+    def __init__(self):
         pass
-    
+
     @property
     def modules(self) -> dict:
         return modules
-    
+
     @property
     def cached(self) -> dict:
         return cached
-    
+
     @property
     def alias(self) -> dict:
         return alias
 
+
 class RegistryPackageManager:
     def __init__(self):
         self._object = None
-        
+
     @staticmethod
     def return_value_of() -> _Registry:
         return _Registry
-    
+
     @validate_parameter({"path": str})
     def load_package(self, path: str) -> importlib.util.spec_from_file_location:
         """
         Load Package from path
         """
-        
+
         spec = importlib.util.spec_from_file_location("mod", path)
         log.debug(f"package '{path}' as spec > {spec}", flag="import")
-        
+
         mod = importlib.util.module_from_spec(spec=spec)
         log.debug(f"module instance > {mod}", flag="import")
-        
+
         spec.loader.exec_module(mod)
         log.debug("running spec.loader.exec_module(mod)..", flag="import")
-        
+
         return mod
+
 
 class package:
     def __init__(self):
         self._RPM = RegistryPackageManager()
-    
+
     def use(self, name: str) -> Any:
         """
         import new package and cached.
         """
         log.debug(f"Importing package '{name}'..", flag=f"{name}:USE")
-        
+
         if name in modules:
             log.debug(f"returning instance '{name}'", flag=f"{name}:USE")
             return modules[name]

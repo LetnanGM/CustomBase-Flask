@@ -34,7 +34,7 @@ class File(BaseFileHandler):
 
     def Write(
         self, Message: str | dict, ModeHandler: str = "w", indent: int = 4
-    ) -> bool:
+    ) -> WriteHandler:
         """
         Writer function for writing some message to target or pathfile.
 
@@ -49,7 +49,5 @@ class File(BaseFileHandler):
             raise FileNotFoundError(f"File path '{self._path_file}' are not found!")
 
         fp = open(self._path_file, ModeHandler)
-        if fp:
-            return WriteHandler(fp=fp, obj=Message, indent=indent)
-
-        return False
+        
+        return WriteHandler(fp=fp, obj=Message, indent=indent)

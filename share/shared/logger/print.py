@@ -117,7 +117,7 @@ class Logger(Handler, BaseLogger):
     def silent(self, message: str, **kwargs):
         # Respect VERBOSE: only print when verbose; still log to file at DEBUG
         # level
-        
+
         if VERBOSE:
             self._write("SILENT", Colors.DARK_GRAY, message, "silent", **kwargs)
         else:
@@ -129,7 +129,7 @@ class Logger(Handler, BaseLogger):
         if VERBOSE:
             if flag:
                 message = f"[{flag}] {message}"
-                
+
             self._write("DEBUG", Colors.CYAN, message, "debug", **kwargs)
         else:
             # Log debug to file even when not verbose

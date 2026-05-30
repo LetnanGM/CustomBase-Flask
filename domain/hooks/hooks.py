@@ -1,12 +1,12 @@
 """
-              ADVANCED LAYERED EVENT SYSTEM                       
-   Inspired by WordPress hooks, Google Guava EventBus,            
-   Yandex's internal pubsub, and Django signals                   
-                                                                  
-   ARCHITECTURE (3 layers):                                       
-    Layer 1 — Core Bus        : low-level fire/register + priority   
-    Layer 2 — Event Objects   : typed, structured event data         
-    Layer 3 — High-Level API  : decorators, namespaces, middleware   
+           ADVANCED LAYERED EVENT SYSTEM
+Inspired by WordPress hooks, Google Guava EventBus,
+Yandex's internal pubsub, and Django signals
+
+ARCHITECTURE (3 layers):
+ Layer 1 — Core Bus        : low-level fire/register + priority
+ Layer 2 — Event Objects   : typed, structured event data
+ Layer 3 — High-Level API  : decorators, namespaces, middleware
 
 """
 
@@ -18,23 +18,25 @@ from typing import Callable
 
 from .core.event import EventSystem
 from .core.eventbus import EventBus
-from .core.model import (Event, Priority, PropagationError)
+from .core.model import Event, Priority, PropagationError
 
 __all__ = ["Event", "Priority", "PropagationError", "EventBus", "EventSystem"]
 
 # Singleton — drop-in replacement for old events.py
 events = EventSystem()
 
+
 # Backwards-compatible shim
 def register_hook(event_name: str, callback: Callable, priority: int = Priority.NORMAL):
     events.bus().on(event_name, callback, priority=priority)
+
 
 def fire_hook(event_name: str, *args, **kwargs) -> Event:
     # pack positional args into payload for compatibility
     payload = kwargs
     if args:
         payload["args"] = args
-        
+
     return events.emit(event_name, **payload)
 
 
@@ -94,7 +96,7 @@ if __name__ == "__main__":
 
     print("\n═══ EMIT: app.start (x2, only fires once) ═══")
     events.emit("app.start")
-    events.emit("app.start")   # silent
+    events.emit("app.start")  # silent
 
     print("\n═══ NAMESPACED: auth.login ═══")
     auth.emit("login", user="bob")
@@ -104,12 +106,15 @@ if __name__ == "__main__":
         print(f"  {ev.name:30s} id={ev.event_id[:8]}")
 
     print("\n═══ ASYNC (event loop) ═══")
+
     async def demo_async():
         async def async_handler(event: Event):
             await asyncio.sleep(0.01)
             print(f"  [async] Got {event.name} — user={event.get('user')}")
+
         events.bus().on("user.signup", async_handler)
         await events.emit_async("user.signup", user="carol")
+
     asyncio.run(demo_async())
 
     print("\n═══ BACKWARDS COMPAT ═══")

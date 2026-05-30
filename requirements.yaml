@@ -1,0 +1,11 @@
+name: Baseplate_project
+dependencies:
+  - aiohttp
+  - bleach
+  - Flask
+  - psutil
+  - pydantic
+  - python-dotenv
+  - Requests
+  - SQLAlchemy
+  - Werkzeug

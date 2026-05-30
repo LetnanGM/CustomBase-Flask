@@ -1,5 +1,6 @@
 from .eventbus import EventBus
 
+
 class _NamespacedBus:
     """
     A view over an EventBus that auto-prefixes all event names.
@@ -8,7 +9,7 @@ class _NamespacedBus:
 
     def __init__(self, bus: EventBus, namespace: str):
         self._bus = bus
-        self._ns  = namespace
+        self._ns = namespace
 
     def _qualify(self, name: str) -> str:
         return f"{self._ns}.{name}" if not name.startswith(self._ns) else name
@@ -33,4 +34,3 @@ class _NamespacedBus:
 
     def namespace(self, sub: str) -> "_NamespacedBus":
         return _NamespacedBus(self._bus, f"{self._ns}.{sub}")
-

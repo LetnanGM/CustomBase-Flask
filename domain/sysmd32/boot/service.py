@@ -1,10 +1,17 @@
 import sys
 import time
 
+
 from .model import (
-    BootStage, StageStatus, _STATUS_COLOR, 
-    _RESET, _STATUS_SYMBOL, BootReport, BootFailure
+    BootStage,
+    StageStatus,
+    _STATUS_COLOR,
+    _RESET,
+    _STATUS_SYMBOL,
+    BootReport,
+    BootFailure,
 )
+
 
 class BootSequencer:
     """
@@ -16,16 +23,12 @@ class BootSequencer:
         [ FAIL ] Registering blueprints...
     """
 
-    _COL_WIDTH = 52   # lebar kolom deskripsi
+    _COL_WIDTH = 52  # lebar kolom deskripsi
 
     def __init__(self, logger, *, use_color: bool = True) -> None:
         self._logger = logger
         self._use_color = use_color and sys.stdout.isatty()
         self._stages: list[BootStage] = []
-
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
 
     def add(self, stage: BootStage) -> "BootSequencer":
         """Tambah stage; mendukung method chaining."""
@@ -54,10 +57,6 @@ class BootSequencer:
         self._print_summary(report)
         return report
 
-    # ------------------------------------------------------------------
-    # Private
-    # ------------------------------------------------------------------
-
     def _execute(self, stage: BootStage, report: BootReport) -> None:
         if stage.condition is not None and not stage.condition():
             stage.status = StageStatus.SKIPPED
@@ -73,7 +72,7 @@ class BootSequencer:
             stage.status = StageStatus.OK
         except Exception as exc:
             stage.status = StageStatus.FAILED
-            stage.error  = exc
+            stage.error = exc
             self._logger.error(f"Boot stage '{stage.name}' failed: {exc}")
         finally:
             stage.duration = time.perf_counter() - t0
@@ -83,11 +82,11 @@ class BootSequencer:
 
     def _print_stage_line(self, stage: BootStage) -> None:
         symbol = _STATUS_SYMBOL[stage.status]
-        label  = stage.name[:self._COL_WIDTH].ljust(self._COL_WIDTH)
-        ms     = f"{stage.duration * 1000:>6.1f}ms"
+        label = stage.name[: self._COL_WIDTH].ljust(self._COL_WIDTH)
+        ms = f"{stage.duration * 1000:>6.1f}ms"
 
         if self._use_color:
-            color  = _STATUS_COLOR[stage.status]
+            color = _STATUS_COLOR[stage.status]
             bracket = f"{color}[{symbol}]{_RESET}"
         else:
             bracket = f"[{symbol}]"
@@ -102,7 +101,7 @@ class BootSequencer:
 
     def _print_summary(self, report: BootReport) -> None:
         print("─" * (self._COL_WIDTH + 20))
-        ok   = report.count(StageStatus.OK)
+        ok = report.count(StageStatus.OK)
         fail = report.count(StageStatus.FAILED)
         skip = report.count(StageStatus.SKIPPED)
         total_ms = f"{report.total_duration * 1000:.1f}ms"

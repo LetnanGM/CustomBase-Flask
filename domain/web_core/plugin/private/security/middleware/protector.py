@@ -1,12 +1,13 @@
 # inside protect.py (or wherever setup_security is defined)
 from .ProtectChain import ProtectionChain
 
+
 def setup_securitychain(app):
     from flask import request
     from domain.web_core.bootstrap import chainring_logger
-    
+
     app = app
-    
+
     """
     Initialize protection chain and register before_request hook.
     This will auto-load common protection subprotects under

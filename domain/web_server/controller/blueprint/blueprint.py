@@ -1,17 +1,3 @@
-"""
-Blueprint Manager - Scalable Implementation
-============================================
-Refactoring highlights:
-- Dependency injection menggantikan global state
-- BlueprintRegistry sebagai single source of truth yang thread-safe
-- BlueprintLoader dengan strategy pattern untuk extensibility
-- Priority-based registration
-- Lifecycle hooks (before/after register)
-- Per-blueprint error isolation
-- Fully testable tanpa Flask app
-
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -21,6 +7,7 @@ from flask import Flask
 
 from .model import BlueprintEntry, RegistrationHooks, RegistrationPriority, LoadTarget
 from .registry import BlueprintRegistry
+
 
 class BlueprintManager:
     """
@@ -52,18 +39,14 @@ class BlueprintManager:
         isolate_errors: bool = False,
     ) -> None:
         from .loader import BlueprintLoader
-        
+
         self._app = app
         self._registry = registry
         self._logger = logger
         self._hooks = hooks or RegistrationHooks()
         self._isolate_errors = isolate_errors
         self._loader = BlueprintLoader(app)
-
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
-
+        
     def register_blueprints(self) -> RegistrationReport:
         """
         Registrasi semua blueprint dari registry.
@@ -82,7 +65,7 @@ class BlueprintManager:
         for entry in entries:
             self._process_entry(entry, report)
 
-        self._logger.info(
+        self._logger.debug(
             f"Registrasi selesai — "
             f"berhasil: {report.succeeded}, gagal: {report.failed}."
         )
@@ -92,12 +75,10 @@ class BlueprintManager:
 
         return report
 
-    # ------------------------------------------------------------------
-    # Private
-    # ------------------------------------------------------------------
-
     def _process_entry(self, entry: BlueprintEntry, report: RegistrationReport) -> None:
-        self._logger.info(f"Memuat blueprint '{entry.target.__name__}' (prioritas={entry.priority.name})..")
+        self._logger.debug(
+            f"Memuat blueprint '{entry.target.__name__}' (prioritas={entry.priority.name}).."
+        )
 
         if self._hooks.before:
             self._hooks.before(entry)
@@ -111,9 +92,7 @@ class BlueprintManager:
 
         except Exception as exc:
             report.record_failure(entry, exc)
-            self._logger.error(
-                f"Gagal memuat '{entry.target.__name__}': {exc}"
-            )
+            self._logger.error(f"Gagal memuat '{entry.target.__name__}': {exc}")
 
             if self._hooks.on_error:
                 self._hooks.on_error(entry, exc)
@@ -126,9 +105,11 @@ class BlueprintManager:
 # Report  (replaces silent failure)
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class RegistrationReport:
     """Hasil registrasi — berguna untuk health-check endpoint."""
+
     _successes: list[BlueprintEntry] = field(default_factory=list)
     _failures: list[tuple[BlueprintEntry, Exception]] = field(default_factory=list)
 
@@ -157,6 +138,7 @@ class RegistrationReport:
 
 class BlueprintRegistrationError(RuntimeError):
     """Dilempar saat ada blueprint yang gagal dan isolate_errors=False."""
+
     def __init__(self, report: RegistrationReport) -> None:
         failed = [e.target.__name__ for e, _ in report.errors]
         super().__init__(f"Blueprint gagal diregistrasi: {failed}")
@@ -169,6 +151,7 @@ class BlueprintRegistrationError(RuntimeError):
 
 # Registry default — dipakai kalau tidak ada DI
 _default_registry = BlueprintRegistry()
+
 
 def register(
     target: Optional[LoadTarget] = None,
@@ -190,6 +173,7 @@ def register(
 
         register(AuthBlueprint, priority=RegistrationPriority.CRITICAL)
     """
+
     def _register(t: LoadTarget) -> LoadTarget:
         registry.add(t, priority=priority, tags=tags)
         return t

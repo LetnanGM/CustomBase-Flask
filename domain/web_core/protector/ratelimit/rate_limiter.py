@@ -93,13 +93,18 @@ class RateLimiter:
         self._store.prune_login_attempts(ip, lockout)
 
         if username and self._distributed_brute_force_detected(ip, username):
-            if len(self._store.get_login_attempts(ip)) >= SecurityConfig.MAX_LOGIN_ATTEMPTS // 2:
+            if (
+                len(self._store.get_login_attempts(ip))
+                >= SecurityConfig.MAX_LOGIN_ATTEMPTS // 2
+            ):
                 self._store.block_ip(ip, timedelta(hours=LOGIN_LOCKOUT_HOURS))
                 return False
 
         if len(self._store.get_login_attempts(ip)) >= SecurityConfig.MAX_LOGIN_ATTEMPTS:
             self._store.block_ip(ip, lockout)
-            rl_logger.vsilent(f"🔒 Too many login attempts — IP blocked: {ip}", extra={"ip": ip})
+            rl_logger.vsilent(
+                f"🔒 Too many login attempts — IP blocked: {ip}", extra={"ip": ip}
+            )
             return False
 
         return True
@@ -112,7 +117,8 @@ class RateLimiter:
         """Return current attack/rate-limit counters."""
         base = self._store.stats()
         active = sum(
-            1 for c in self._store.get_attack_clusters()
+            1
+            for c in self._store.get_attack_clusters()
             if datetime.now() - c.last_seen < timedelta(minutes=30)
         )
         base["active_clusters"] = active
@@ -130,7 +136,9 @@ class RateLimiter:
     # Private helpers
     # ------------------------------------------------------------------ #
 
-    def _record_request(self, ip: str, endpoint: str, user_agent: str, fingerprint: str):
+    def _record_request(
+        self, ip: str, endpoint: str, user_agent: str, fingerprint: str
+    ):
         now = datetime.now()
         self._store.prune_requests(ip, timedelta(hours=1))
         self._store.get_pattern(ip).record(now, endpoint, user_agent, fingerprint)
@@ -155,7 +163,11 @@ class RateLimiter:
                 f"⛔ Per-minute limit hit for {ip} "
                 f"[{len(recent_minute)}/{max_per_minute}]"
                 + (" [SUSPICIOUS]" if is_suspicious else ""),
-                extra={"ip": ip, "count": len(recent_minute), "suspicious": is_suspicious},
+                extra={
+                    "ip": ip,
+                    "count": len(recent_minute),
+                    "suspicious": is_suspicious,
+                },
             )
             return False
 

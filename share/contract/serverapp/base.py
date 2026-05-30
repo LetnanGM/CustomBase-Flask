@@ -18,7 +18,7 @@ class ServerApp(ABC):
         self.app: type = (
             None  # set your instance service here before route or start server
         )
-        
+
     @abstractmethod
     def setup(self) -> None:
         """

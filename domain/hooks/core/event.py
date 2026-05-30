@@ -1,11 +1,13 @@
 """
 There's Layer 3 of High-Level Decorator API & Namespace Scoping
 """
+
 from typing import Dict, Set, Optional, Callable, List, Type, Any
 
 from .eventbus import EventBus
 from .namespace import _NamespacedBus
 from .model import Priority, Event
+
 
 class EventSystem:
     """
@@ -45,23 +47,31 @@ class EventSystem:
         bus: str = "global",
     ):
         """Decorator: @events.on('user.login')"""
+
         def decorator(fn: Callable):
             self.bus(bus).on(event_name, fn, priority=priority, once=once, tags=tags)
             return fn
+
         return decorator
 
-    def filter(self, event_name: str, *, priority: int = Priority.NORMAL, bus: str = "global"):
+    def filter(
+        self, event_name: str, *, priority: int = Priority.NORMAL, bus: str = "global"
+    ):
         """Decorator: @events.filter('content.render') — like WP add_filter."""
+
         def decorator(fn: Callable):
             self.bus(bus).on(event_name, fn, priority=priority)
             return fn
+
         return decorator
 
     def middleware(self, bus: str = "global"):
         """Decorator: @events.middleware() — register a bus-level interceptor."""
+
         def decorator(fn: Callable):
             self.bus(bus).use(fn)
             return fn
+
         return decorator
 
     # ── Emit shortcuts ────────────────────────────────────────────
@@ -72,7 +82,9 @@ class EventSystem:
     async def emit_async(self, name: str, *, bus: str = "global", **payload) -> Event:
         return await self.bus(bus).emit_async(name, **payload)
 
-    def emit_filter(self, name: str, value: Any, *, bus: str = "global", **payload) -> Any:
+    def emit_filter(
+        self, name: str, value: Any, *, bus: str = "global", **payload
+    ) -> Any:
         return self.bus(bus).emit_filter(name, value, **payload)
 
     def off(self, name: str, handler=None, *, bus: str = "global"):
@@ -87,9 +99,11 @@ class EventSystem:
         def handle(event: UserLoginEvent): ...
         Listeners are registered for event_cls.__name__.
         """
+
         def decorator(fn: Callable):
             self._default.on(event_cls.__name__, fn)
             return fn
+
         return decorator
 
     def dispatch(self, event: Event, *, bus: str = "global") -> Event:
@@ -98,9 +112,10 @@ class EventSystem:
 
     # ── Utilities ─────────────────────────────────────────────────
 
-    def history(self, event_name: Optional[str] = None, *, bus: str = "global") -> List[Event]:
+    def history(
+        self, event_name: Optional[str] = None, *, bus: str = "global"
+    ) -> List[Event]:
         return self.bus(bus).history(event_name)
 
     def __repr__(self):
         return f"<EventSystem buses={list(self._buses.keys())}>"
-

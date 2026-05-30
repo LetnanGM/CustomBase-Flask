@@ -1,0 +1,17 @@
+{
+    "registry": {
+        "version": "1.0.0",
+        "author": "LetnanGM",
+        "license": "MIT"
+    },
+
+    "config": {
+        "workspace": {
+            "relative": "",
+            "absolute": ""
+        },
+
+        "package": "[ABS]/data/configuration/internal/registry/package",
+        "metadata": "[ABS]/data/configuration/internal/registry/metadata.json"
+    }
+}

@@ -1,14 +1,3 @@
-"""
-Flask Server — Linux-style Bootloader + Scalable Architecture
-=============================================================
-
-Arsitektur:
-  BootStage       → unit atomik dalam proses startup
-  BootSequencer   → menjalankan stage secara berurutan dengan status logging
-  ServerContext   → immutable runtime state (menggantikan ServerState global)
-  FlaskServer     → orkestrator utama
-"""
-
 from __future__ import annotations
 
 import logging
@@ -17,17 +6,18 @@ from dataclasses import dataclass
 from flask import Flask
 
 from share.contract.serverapp import ServerApp
+from share.shared.logger.print import Logger
+
 from data.configuration.internal.server.webapp import ServerConfig, banner
-from .controller.blueprint.blueprint import BlueprintManager, BlueprintRegistry, get_default_registry
+from .controller.blueprint.blueprint import (
+    BlueprintManager,
+    BlueprintRegistry,
+    get_default_registry,
+)
 from .controller.route.routes import RouteManager
 
-from .bootloader.boot import (
-    BootSequencer, BootStage, BootReport
-)
+from ..sysmd32.boot.service import BootSequencer, BootStage, BootReport
 
-# ---------------------------------------------------------------------------
-# ServerContext  (menggantikan ServerState global mutable)
-# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class ServerContext:
@@ -35,14 +25,11 @@ class ServerContext:
     Immutable runtime state.  Dibuat sekali di FlaskServer.__init__
     dan diteruskan ke komponen lain via constructor injection.
     """
-    config:   ServerConfig
-    app:      Flask
+
+    config: ServerConfig
+    app: Flask
     registry: BlueprintRegistry
 
-
-# ---------------------------------------------------------------------------
-# FlaskServer
-# ---------------------------------------------------------------------------
 
 class FlaskServer(ServerApp):
     """
@@ -72,13 +59,10 @@ class FlaskServer(ServerApp):
             app=self._flask_app,
             registry=registry,
         )
+        self.logger = Logger()
 
         self._sequencer = BootSequencer(self.logger)
         self._build_boot_sequence()
-
-    # ------------------------------------------------------------------
-    # Boot sequence definition
-    # ------------------------------------------------------------------
 
     def _build_boot_sequence(self) -> None:
         """
@@ -87,16 +71,18 @@ class FlaskServer(ServerApp):
         """
         ctx = self._ctx
 
-        self._sequencer \
-            .add(BootStage(
+        self._sequencer.add(
+            BootStage(
                 name="Suppress werkzeug / CLI banner",
                 action=self._suppress_werkzeug,
-            )) \
-            .add(BootStage(
+            )
+        ).add(
+            BootStage(
                 name="Configure Flask application",
                 action=lambda: self._configure_flask(ctx.app, ctx.config),
-            )) \
-            .add(BootStage(
+            )
+        ).add(
+            BootStage(
                 name="Register blueprints",
                 action=lambda: BlueprintManager(
                     app=ctx.app,
@@ -104,26 +90,26 @@ class FlaskServer(ServerApp):
                     logger=self.logger,
                     isolate_errors=False,
                 ).register_blueprints(),
-            )) \
-            .add(BootStage(
+            )
+        ).add(
+            BootStage(
                 name="Register routes",
                 action=lambda: RouteManager(
                     app=ctx.app,
                     logger=self.logger,
                 ).register_routes(),
-            )) \
-            .add(BootStage(
+            )
+        ).add(
+            BootStage(
                 name="Validate server configuration",
                 action=lambda: self._validate_config(ctx.config),
-            )) \
-            .add(BootStage(
+            )
+        ).add(
+            BootStage(
                 name="Print listening address",
                 action=lambda: self._print_listen_info(ctx.config),
-            ))
-
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
+            )
+        )
 
     def setup(self) -> BootReport:
         """
@@ -137,18 +123,19 @@ class FlaskServer(ServerApp):
         """
         print(banner())
         report = self._sequencer.run()
-        self.logger.info("Server setup completed.")
+        self.logger.debug("Server setup completed.")
         return report
 
     def run(self) -> None:
         from share.support.os.termutil import clean_output
         import time
+
         time.sleep(2)
         clean_output()
-        
+
         try:
             print(banner())
-            
+
             super().run()
             self._flask_app.run(
                 host=self._ctx.config.host,
@@ -160,10 +147,6 @@ class FlaskServer(ServerApp):
             self.logger.error(f"FlaskServer.run() error: {exc}")
             raise
 
-    # ------------------------------------------------------------------
-    # Stage actions (static / pure functions — mudah di-test sendiri)
-    # ------------------------------------------------------------------
-
     @staticmethod
     def _suppress_werkzeug() -> None:
         log = logging.getLogger("werkzeug")
@@ -174,12 +157,14 @@ class FlaskServer(ServerApp):
 
     @staticmethod
     def _configure_flask(app: Flask, config: ServerConfig) -> None:
-        app.config.update({
-            "MAX_CONTENT_LENGTH":       config.max_content_length,
-            "SECRET_KEY":               config.secret_key,
-            "JSON_SORT_KEYS":           False,
-            "JSONIFY_PRETTYPRINT_REGULAR": True,
-        })
+        app.config.update(
+            {
+                "MAX_CONTENT_LENGTH": config.max_content_length,
+                "SECRET_KEY": config.secret_key,
+                "JSON_SORT_KEYS": False,
+                "JSONIFY_PRETTYPRINT_REGULAR": True,
+            }
+        )
 
     @staticmethod
     def _validate_config(config: ServerConfig) -> None:

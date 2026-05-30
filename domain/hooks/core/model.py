@@ -9,17 +9,18 @@ import logging
 
 from dataclasses import dataclass, field
 from enum import IntEnum
-from functools import wraps
 
 logger = logging.getLogger(__name__)
 
+
 class Priority(IntEnum):
     """WordPress-style numeric priorities (lower = earlier)."""
-    FIRST      = -100
-    HIGH       = -10
-    NORMAL     = 0
-    LOW        = 10
-    LAST       = 100
+
+    FIRST = -100
+    HIGH = -10
+    NORMAL = 0
+    LOW = 10
+    LAST = 100
 
 
 class PropagationError(Exception):
@@ -33,17 +34,18 @@ class Event:
     All events carry metadata + a mutable payload.
     Inspired by Google Guava's EventBus and DOM Events.
     """
-    name:       str
-    payload:    Dict[str, Any]   = field(default_factory=dict)
-    source:     Optional[object] = None          # who fired it
-    timestamp:  float            = field(default_factory=time.time)
-    event_id:   str              = field(default_factory=lambda: str(uuid.uuid4()))
-    namespace:  str              = "global"
-    tags:       Set[str]         = field(default_factory=set)
+
+    name: str
+    payload: Dict[str, Any] = field(default_factory=dict)
+    source: Optional[object] = None  # who fired it
+    timestamp: float = field(default_factory=time.time)
+    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    namespace: str = "global"
+    tags: Set[str] = field(default_factory=set)
 
     # mutable state
-    _stopped:   bool = field(default=False, repr=False)
-    _results:   List[Any] = field(default_factory=list, repr=False)
+    _stopped: bool = field(default=False, repr=False)
+    _results: List[Any] = field(default_factory=list, repr=False)
 
     def stop_propagation(self):
         """Halt further listener calls for this event."""
@@ -72,13 +74,14 @@ class Event:
 @dataclass(order=True)
 class _HandlerRecord:
     """Internal: one registered listener."""
-    priority:  int
-    order:     int           = field(compare=True)   # insertion order tie-break
-    handler:   Callable      = field(compare=False)
-    once:      bool          = field(default=False, compare=False)
-    tags:      Set[str]      = field(default_factory=set, compare=False)
-    weak:      bool          = field(default=False, compare=False)
-    _ref:      Any           = field(default=None, repr=False, compare=False)
+
+    priority: int
+    order: int = field(compare=True)  # insertion order tie-break
+    handler: Callable = field(compare=False)
+    once: bool = field(default=False, compare=False)
+    tags: Set[str] = field(default_factory=set, compare=False)
+    weak: bool = field(default=False, compare=False)
+    _ref: Any = field(default=None, repr=False, compare=False)
 
     def is_alive(self) -> bool:
         if not self.weak:
@@ -92,4 +95,3 @@ class _HandlerRecord:
                 return None
             return self.handler(obj, *args, **kwargs)
         return self.handler(*args, **kwargs)
-

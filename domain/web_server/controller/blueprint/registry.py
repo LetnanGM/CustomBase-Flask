@@ -3,6 +3,7 @@ from .model import LoadTarget, RegistrationPriority, BlueprintEntry
 
 import threading
 
+
 class BlueprintRegistry:
     """
     Thread-safe registry untuk menyimpan blueprint sebelum app tersedia.

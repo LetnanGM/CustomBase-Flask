@@ -27,8 +27,8 @@ class RateLimiterStore:
         self._login_attempts: Dict[str, List[datetime]] = defaultdict(list)
 
         # --- block lists ---
-        self._blocked_ips: Dict[str, datetime] = {}          # ip -> unblock_at
-        self._fingerprint_blocks: Dict[str, datetime] = {}   # fingerprint -> unblock_at
+        self._blocked_ips: Dict[str, datetime] = {}  # ip -> unblock_at
+        self._fingerprint_blocks: Dict[str, datetime] = {}  # fingerprint -> unblock_at
 
         # --- pattern / anomaly tracking ---
         self._request_patterns: Dict[str, RequestPattern] = defaultdict(RequestPattern)
@@ -101,7 +101,8 @@ class RateLimiterStore:
 
     def count_ips_with_login_attempts(self, exclude_ip: str) -> int:
         return sum(
-            1 for ip, attempts in self._login_attempts.items()
+            1
+            for ip, attempts in self._login_attempts.items()
             if ip != exclude_ip and attempts
         )
 
@@ -131,8 +132,7 @@ class RateLimiterStore:
     def prune_global_buffer(self, window: timedelta):
         cutoff = datetime.now() - window
         self._global_request_buffer = [
-            (ts, ip, sig) for ts, ip, sig in self._global_request_buffer
-            if ts >= cutoff
+            (ts, ip, sig) for ts, ip, sig in self._global_request_buffer if ts >= cutoff
         ]
 
     def get_attack_clusters(self) -> List[AttackCluster]:
@@ -167,8 +167,7 @@ class RateLimiterStore:
         now = datetime.now()
 
         self._attack_clusters = [
-            c for c in self._attack_clusters
-            if now - c.last_seen < cluster_ttl
+            c for c in self._attack_clusters if now - c.last_seen < cluster_ttl
         ]
 
         for ip in list(self._request_patterns):
@@ -177,8 +176,7 @@ class RateLimiterStore:
                 del self._request_patterns[ip]
 
         self._suspicious_ips = {
-            ip for ip in self._suspicious_ips
-            if ip in self._request_patterns
+            ip for ip in self._suspicious_ips if ip in self._request_patterns
         }
 
     # ------------------------------------------------------------------ #

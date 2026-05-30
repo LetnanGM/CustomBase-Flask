@@ -1,9 +1,12 @@
 # ProtectionChain.py
 from typing import Callable, List
 
+
 class ProtectionError(Exception):
     """Raised when a protection handler rejects the request."""
+
     pass
+
 
 class ProtectionChain:
     """
@@ -14,7 +17,7 @@ class ProtectionChain:
 
     def __init__(self):
         from domain.web_core.bootstrap import chainring_logger
-         
+
         self.handlers: List[Callable] = []
         self._log = chainring_logger
 
@@ -22,10 +25,12 @@ class ProtectionChain:
         """Add a handler (callable(request) -> bool)"""
         if not callable(func):
             raise TypeError("handler must be callable")
-        
+
         self.handlers.append(func)
-        self._log.debug(f"ProtectionChain: added handler {getattr(func,'__name__',repr(func))}")
-        
+        self._log.debug(
+            f"ProtectionChain: added handler {getattr(func,'__name__',repr(func))}"
+        )
+
         return self
 
     def run(self, req):
@@ -33,22 +38,28 @@ class ProtectionChain:
         Run handlers in order. If any returns False or raises, stop and abort.
         """
         from flask import abort
-        
+
         for fn in self.handlers:
             try:
                 result = fn(req)
             except ProtectionError as pe:
-                self._log.info(f"ProtectionChain: handler {fn.__name__} rejected request: {pe}")
+                self._log.info(
+                    f"ProtectionChain: handler {fn.__name__} rejected request: {pe}"
+                )
                 abort(403, description=str(pe))
-                
+
             except Exception as exc:
-                self._log.exception(f"ProtectionChain: handler {fn.__name__} crashed: {exc}")
+                self._log.exception(
+                    f"ProtectionChain: handler {fn.__name__} crashed: {exc}"
+                )
                 abort(500, description="Protection subsystem error")
-                
+
             else:
                 # allow if True / truthy
                 if not result:
-                    self._log.info(f"ProtectionChain: handler {fn.__name__} returned False -> deny")
+                    self._log.info(
+                        f"ProtectionChain: handler {fn.__name__} returned False -> deny"
+                    )
                     abort(403, description=f"Blocked by {fn.__name__}")
 
     # ---------- Convenience: auto-load handlers from module names ----------
@@ -71,8 +82,13 @@ class ProtectionChain:
 
         # candidate names that represent a validation function
         candidates = prefer_names or [
-            "validate", "validate_request", "validate_csrf",
-            "allow_request", "check", "before_request", "run"
+            "validate",
+            "validate_request",
+            "validate_csrf",
+            "allow_request",
+            "check",
+            "before_request",
+            "run",
         ]
 
         # 1. module-level functions
@@ -88,7 +104,12 @@ class ProtectionChain:
             if obj.__module__ != mod.__name__:
                 continue
             # try typical instance method names
-            instance_method_names = ["validate", "validate_request", "allow_request", "check"]
+            instance_method_names = [
+                "validate",
+                "validate_request",
+                "allow_request",
+                "check",
+            ]
             try:
                 inst = None
                 for mname in instance_method_names:

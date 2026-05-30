@@ -1,4 +1,6 @@
-DATABASE_AUTH = "domain/WebApp_service/plugin/internal/protection/data/configuration/security"
+DATABASE_AUTH = (
+    "domain/WebApp_service/plugin/internal/protection/data/configuration/security"
+)
 
 # ONE TAP PASSWORD
 DATABASE_TOTP = DATABASE_AUTH + "/database/totp.json"

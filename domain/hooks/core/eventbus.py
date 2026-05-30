@@ -5,10 +5,11 @@
 import threading
 import weakref
 from collections import defaultdict
-from typing import (Any, Callable, Dict, List, Optional, Set, Union)
-from .model import (_HandlerRecord, Event, Priority, PropagationError, logger)
+from typing import Any, Callable, Dict, List, Optional, Set, Union
+from .model import _HandlerRecord, Event, Priority, PropagationError, logger
 
 import asyncio
+
 
 class EventBus:
     """
@@ -21,10 +22,10 @@ class EventBus:
         self.name = name
         self._lock = threading.RLock()
         self._listeners: Dict[str, List[_HandlerRecord]] = defaultdict(list)
-        self._middleware: List[Callable] = []       # pre-fire interceptors
-        self._history:   List[Event]    = []        # replay log
+        self._middleware: List[Callable] = []  # pre-fire interceptors
+        self._history: List[Event] = []  # replay log
         self._max_history = 200
-        self._counter = 0                           # insertion-order counter
+        self._counter = 0  # insertion-order counter
 
     # ── Registration ─────────────────────────────────────────────
 
@@ -55,11 +56,19 @@ class EventBus:
                     record._ref = weakref.WeakMethod(handler)
                 except TypeError:
                     record._ref = weakref.ref(handler)
-                record.handler = handler.__func__ if hasattr(handler, "__func__") else handler
+                record.handler = (
+                    handler.__func__ if hasattr(handler, "__func__") else handler
+                )
 
             self._listeners[event_name].append(record)
             self._listeners[event_name].sort(key=lambda r: (r.priority, r.order))
-        logger.debug("[%s] registered '%s' → %s (prio=%d)", self.name, event_name, handler, priority)
+        logger.debug(
+            "[%s] registered '%s' → %s (prio=%d)",
+            self.name,
+            event_name,
+            handler,
+            priority,
+        )
         return self
 
     def once(self, event_name: str, handler: Callable, **kwargs) -> "EventBus":
@@ -73,8 +82,7 @@ class EventBus:
                 self._listeners.pop(event_name, None)
             else:
                 self._listeners[event_name] = [
-                    r for r in self._listeners[event_name]
-                    if r.handler is not handler
+                    r for r in self._listeners[event_name] if r.handler is not handler
                 ]
         return self
 
@@ -139,13 +147,21 @@ class EventBus:
                 event.stop_propagation()
                 break
             except Exception as exc:
-                logger.error("[%s] handler error on '%s': %s", self.name, event.name, exc, exc_info=True)
+                logger.error(
+                    "[%s] handler error on '%s': %s",
+                    self.name,
+                    event.name,
+                    exc,
+                    exc_info=True,
+                )
 
         # cleanup dead / one-shot records
         if dead:
             with self._lock:
                 for key in self._listeners:
-                    self._listeners[key] = [r for r in self._listeners[key] if r not in dead]
+                    self._listeners[key] = [
+                        r for r in self._listeners[key] if r not in dead
+                    ]
 
         return event
 
@@ -175,7 +191,13 @@ class EventBus:
             except PropagationError:
                 event.stop_propagation()
             except Exception as exc:
-                logger.error("[%s] async handler error on '%s': %s", self.name, event.name, exc, exc_info=True)
+                logger.error(
+                    "[%s] async handler error on '%s': %s",
+                    self.name,
+                    event.name,
+                    exc,
+                    exc_info=True,
+                )
 
         results = await asyncio.gather(*[_call(r) for r in records])
         event._results.extend(r for r in results if r is not None)
@@ -187,7 +209,9 @@ class EventBus:
         Each listener receives (event) and its return value replaces event['value'].
         Returns the final transformed value.
         """
-        event = Event(name=event_name, payload={"value": value, **payload}, namespace=self.name)
+        event = Event(
+            name=event_name, payload={"value": value, **payload}, namespace=self.name
+        )
         records = self._collect_records(event_name)
         for record in records:
             if event.stopped:
@@ -197,7 +221,13 @@ class EventBus:
                 if result is not None:
                     event["value"] = result
             except Exception as exc:
-                logger.error("[%s] filter error on '%s': %s", self.name, event_name, exc, exc_info=True)
+                logger.error(
+                    "[%s] filter error on '%s': %s",
+                    self.name,
+                    event_name,
+                    exc,
+                    exc_info=True,
+                )
         return event["value"]
 
     # ── Helpers ───────────────────────────────────────────────────
@@ -260,4 +290,3 @@ class EventBus:
 
     def __repr__(self):
         return f"<EventBus name={self.name!r} events={len(self._listeners)}>"
-
