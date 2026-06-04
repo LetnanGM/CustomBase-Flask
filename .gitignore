@@ -1,7 +1,8 @@
+.git
 __pycache__/
-.env
+src/.env
 .ruff_cache
-assets/logs/Application/
-assets/logs/guardian/
-assets/logs/protections/
-assets/logs/Protector/
+src/assets/logs/Application/
+src/assets/logs/guardian/
+src/assets/logs/protections/
+src/assets/logs/Protector/
