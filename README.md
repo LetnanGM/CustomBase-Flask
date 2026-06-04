@@ -20,7 +20,7 @@ CustomBase-Flask is a starter template that provides a solid foundation for Flas
 ### Prerequisites
 
 - Python 3.8+
-- pip or poetry
+- pip or conda
 
 ### Installation
 
@@ -41,16 +41,29 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Running the Application
-
+if you use conda:
 ```bash
-python app.py
+conda install --yes --file requirements.yaml
+```
+
+### Running the Application
+`src` folder is all of ecosystem application, change the directory after install dependencies.
+```bash
+cd src/
+```
+
+then run this
+```bash
+python main.py
 ```
 
 The application will start at `http://localhost:5000`
+you can change the host and port on `data/configuration/internal/server/webapp.py'
 
 ## Project Structure
 
+
+wait update on structure, we will make it scalable and no errors about import ;D
 ```
 CustomBase-Flask/
 ├── app.py              # Main application entry point

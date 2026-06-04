@@ -1,0 +1,9 @@
+aiohttp
+bleach
+Flask
+psutil
+pydantic
+python-dotenv
+Requests
+SQLAlchemy
+Werkzeug
