@@ -1,0 +1,17 @@
+{
+    "TITLE": "Internal Service Provider",
+    "registry": {
+        "version": "1.0.0",
+        "author": "LetnanGM",
+        "license": "MIT"
+    },
+
+    "config": {
+        "title": "Server FL",
+        "description": "Explain your server here",
+        "version": "1.0.0",
+        "properties": {
+            "maintenance": false
+        }
+    }
+}

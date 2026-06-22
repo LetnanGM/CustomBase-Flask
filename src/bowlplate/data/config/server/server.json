@@ -1,0 +1,20 @@
+{
+    "TITLE": "Internal Server Configuration",
+    "registry": {
+        "version": "1.0.0",
+        "author": "LetnanGM",
+        "license": "MIT"
+    },
+
+    "config": {
+        "host": "127.0.0.1",
+        "port": 8000,
+        "static_folder": "",
+        "template_folder": "",
+        "properties": {
+            "debug": false,
+            "max_content_length": 16777216,
+            "secret_key": "$ENV"
+        }
+    }
+}

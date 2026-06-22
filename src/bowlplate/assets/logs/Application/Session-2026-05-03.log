@@ -1,0 +1,11 @@
+2026-05-03 12:53:04,482 - DEBUG - 
+--------------------------------------------------
+NEW PROCESS STARTED!
+--------------------------------------------------
+| extra=asctime='2026-05-03 12:53:04,482'
+2026-05-03 12:53:05,748 - DEBUG - 'SecurityMiddleware' internal package registered!| extra=asctime='2026-05-03 12:53:05,748'
+2026-05-03 12:53:05,748 - DEBUG - 'Guardian_Crash' internal package registered!| extra=asctime='2026-05-03 12:53:05,748'
+2026-05-03 12:53:05,748 - DEBUG - Trying load 'test'..| extra=asctime='2026-05-03 12:53:05,748'
+2026-05-03 12:53:05,763 - DEBUG - [test]: detected object module 'domain.web_core.plugin.public.test.main', finding 'setup_me'..| extra=asctime='2026-05-03 12:53:05,763'
+2026-05-03 12:53:05,763 - DEBUG - [test]:Flask: object doesn't have 'setup_me' function, skiped!| extra=asctime='2026-05-03 12:53:05,763'
+2026-05-03 12:53:05,763 - DEBUG - [test]:polyplay: setup_me finded! object registered into Queue.| extra=asctime='2026-05-03 12:53:05,763'

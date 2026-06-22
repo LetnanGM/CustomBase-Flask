@@ -1,0 +1,15 @@
+{
+    "TITLE": "internal Security Plugin",
+    "registry": {
+        "version": "1.0.0",
+        "author": "LetnanGM",
+        "license": "MIT"
+    },
+
+    "config": {
+        "properties": {
+            "SECURITY_ALTAR": true,
+            "GUARDIAN_CRASH": true
+        }
+    }
+}

@@ -1,0 +1,52 @@
+2026-05-14 16:02:37,403 - DEBUG - >>> UNHANDLED EXCEPTION CAUGHT (Server still running) <<<
+Traceback (most recent call last):
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\main.py", line 7, in <module>
+    serve.deploy()
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\application\controller\webapp.py", line 39, in deploy
+    instance.run() # run server
+    ^^^^^^^^^^^^^^
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\domain\web_server\server.py", line 343, in run
+    from share.support.os.termutil import termutil
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\share\support\os\termutil.py", line 4, in <module>
+    class termutil:
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\share\support\os\termutil.py", line 14, in termutil
+    @register()
+     ^^^^^^^^^^
+TypeError: register() takes at least 1 argument (0 given)
+| extra=asctime='2026-05-14 16:02:37,403'
+2026-05-14 16:05:33,236 - DEBUG - >>> UNHANDLED EXCEPTION CAUGHT (Server still running) <<<
+Traceback (most recent call last):
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\main.py", line 7, in <module>
+    serve.deploy()
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\application\controller\webapp.py", line 39, in deploy
+    instance.run() # run server
+    ^^^^^^^^^^^^^^
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\domain\web_server\server.py", line 346, in run
+    termutil.clean_output()
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\share\support\os\termutil.py", line 12, in clean_output
+    os.system("cls") if self.client == "Windows" else os.system("clear")
+                        ^^^^
+NameError: name 'self' is not defined
+| extra=asctime='2026-05-14 16:05:33,236'
+2026-05-14 16:06:36,578 - DEBUG - >>> UNHANDLED EXCEPTION CAUGHT (Server still running) <<<
+Traceback (most recent call last):
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\main.py", line 7, in <module>
+    serve.deploy()
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\application\controller\webapp.py", line 39, in deploy
+    instance.run() # run server
+    ^^^^^^^^^^^^^^
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\domain\web_server\server.py", line 346, in run
+    termutil.clean_output()
+TypeError: 'property' object is not callable
+| extra=asctime='2026-05-14 16:06:36,578'
+2026-05-14 16:08:29,687 - DEBUG - >>> UNHANDLED EXCEPTION CAUGHT (Server still running) <<<
+Traceback (most recent call last):
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\main.py", line 7, in <module>
+    serve.deploy()
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\application\controller\webapp.py", line 39, in deploy
+    instance.run() # run server
+    ^^^^^^^^^^^^^^
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v1.5.0\domain\web_server\server.py", line 346, in run
+    termutil.clean_output
+AttributeError: type object 'termutil' has no attribute 'clean_output'
+| extra=asctime='2026-05-14 16:08:29,687'

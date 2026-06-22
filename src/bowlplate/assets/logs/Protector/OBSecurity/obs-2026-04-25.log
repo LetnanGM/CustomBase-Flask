@@ -1,0 +1,8 @@
+2026-04-25 16:58:23,762 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 16:58:23,762'
+2026-04-25 16:59:16,005 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 16:59:16,005'
+2026-04-25 17:02:49,713 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 17:02:49,713'
+2026-04-25 17:03:07,653 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 17:03:07,653'
+2026-04-25 17:07:30,810 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 17:07:30,810'
+2026-04-25 17:08:06,489 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 17:08:06,489'
+2026-04-25 17:08:24,451 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 17:08:24,451'
+2026-04-25 17:18:42,576 - DEBUG - 🚨 BAD UA detected: curl/8.12.1... from 127.0.0.1| extra=asctime='2026-04-25 17:18:42,576'
