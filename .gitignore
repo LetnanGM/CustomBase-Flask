@@ -1,6 +1,6 @@
 .git
 __pycache__/
-src/.env
+src/bowlplate/.env
 .ruff_cache
 src/assets/logs/Application/
 src/assets/logs/guardian/
