@@ -6,7 +6,9 @@ from typing import Tuple
 
 from flask import Flask
 from plugin.internal.protection.data.configuration.security.authfactor import (
-    DATABASE_HOTP, DATABASE_TOTP)
+    DATABASE_HOTP,
+    DATABASE_TOTP,
+)
 from shared.utilities.submodule.FileHandling import FileHandler
 
 

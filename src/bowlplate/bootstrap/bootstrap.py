@@ -5,6 +5,7 @@ from share.contract.ui.local import UI
 
 __all__ = ["UI", "reader", "ServerConfig"]
 
+
 def WebServer() -> type:
     from application.controller.webapp import server
 
@@ -32,8 +33,7 @@ def RegistryContextProcessor() -> type:
 # package layer
 class blueprint:
     def BlueprintManager() -> type:
-        from domain.web_server.controller.blueprint.blueprint import \
-            BlueprintManager
+        from domain.web_server.controller.blueprint.blueprint import BlueprintManager
 
         return BlueprintManager
 

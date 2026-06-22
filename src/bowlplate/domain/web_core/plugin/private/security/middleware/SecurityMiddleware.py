@@ -1,7 +1,6 @@
 from flask import Flask, Response, abort, request
 
-from domain.web_core.data.configuration.sys.SecurityConfig import \
-    SecurityConfig
+from domain.web_core.data.configuration.sys.SecurityConfig import SecurityConfig
 
 
 class SecurityMiddleware:

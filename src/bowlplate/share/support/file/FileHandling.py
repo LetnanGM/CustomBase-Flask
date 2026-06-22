@@ -49,5 +49,5 @@ class File(BaseFileHandler):
             raise FileNotFoundError(f"File path '{self._path_file}' are not found!")
 
         fp = open(self._path_file, ModeHandler)
-        
+
         return WriteHandler(fp=fp, obj=Message, indent=indent)

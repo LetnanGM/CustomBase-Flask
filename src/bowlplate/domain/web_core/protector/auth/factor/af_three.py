@@ -1,6 +1,7 @@
 from flask import Flask
-from plugin.internal.protection.data.configuration.security.authfactor import \
-    DATABASED_FIF
+from plugin.internal.protection.data.configuration.security.authfactor import (
+    DATABASED_FIF,
+)
 from shared.utilities.submodule.FileHandling import FileHandler
 
 

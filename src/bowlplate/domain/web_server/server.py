@@ -10,9 +10,11 @@ from share.contract.serverapp import ServerApp
 from share.shared.logger.print import Logger
 
 from ..sysmd32.boot.service import BootReport, BootSequencer, BootStage
-from .controller.blueprint.blueprint import (BlueprintManager,
-                                             BlueprintRegistry,
-                                             get_default_registry)
+from .controller.blueprint.blueprint import (
+    BlueprintManager,
+    BlueprintRegistry,
+    get_default_registry,
+)
 from .controller.route.routes import RouteManager
 from .model import ServerConfig, banner
 
@@ -44,7 +46,7 @@ class FlaskServer(ServerApp):
 
     def __init__(self, config: ServerConfig) -> None:
         super().__init__(config=config)
-        
+
         self._flask_app = Flask(
             import_name=__name__,
             static_folder=config.static_folder,

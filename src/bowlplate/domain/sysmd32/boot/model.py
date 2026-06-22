@@ -9,12 +9,13 @@ from typing import Callable, Optional
 # Status enum
 # ---------------------------------------------------------------------------
 
+
 class StageStatus(str, Enum):
-    PENDING  = "pending"
-    RUNNING  = "running"
-    OK       = "ok"
-    FAILED   = "failed"
-    SKIPPED  = "skipped"
+    PENDING = "pending"
+    RUNNING = "running"
+    OK = "ok"
+    FAILED = "failed"
+    SKIPPED = "skipped"
 
 
 # ---------------------------------------------------------------------------
@@ -24,25 +25,26 @@ class StageStatus(str, Enum):
 _RESET = "\033[0m"
 
 _STATUS_COLOR: dict[StageStatus, str] = {
-    StageStatus.PENDING:  "\033[90m",   # dark gray
-    StageStatus.RUNNING:  "\033[34m",   # blue
-    StageStatus.OK:       "\033[32m",   # green
-    StageStatus.FAILED:   "\033[31m",   # red
-    StageStatus.SKIPPED:  "\033[33m",   # yellow
+    StageStatus.PENDING: "\033[90m",  # dark gray
+    StageStatus.RUNNING: "\033[34m",  # blue
+    StageStatus.OK: "\033[32m",  # green
+    StageStatus.FAILED: "\033[31m",  # red
+    StageStatus.SKIPPED: "\033[33m",  # yellow
 }
 
 _STATUS_SYMBOL: dict[StageStatus, str] = {
-    StageStatus.PENDING:  "    ",
-    StageStatus.RUNNING:  " ── ",
-    StageStatus.OK:       "  OK  ",
-    StageStatus.FAILED:   " FAIL ",
-    StageStatus.SKIPPED:  " SKIP ",
+    StageStatus.PENDING: "    ",
+    StageStatus.RUNNING: " ── ",
+    StageStatus.OK: "  OK  ",
+    StageStatus.FAILED: " FAIL ",
+    StageStatus.SKIPPED: " SKIP ",
 }
 
 
 # ---------------------------------------------------------------------------
 # BootStage — one unit of work in the boot sequence
 # ---------------------------------------------------------------------------
+
 
 @dataclass
 class BootStage:
@@ -60,20 +62,21 @@ class BootStage:
         error:     Exception captured if the stage raised, otherwise None.
     """
 
-    name:      str
-    action:    Callable[[], None]
-    required:  bool                      = True
+    name: str
+    action: Callable[[], None]
+    required: bool = True
     condition: Optional[Callable[[], bool]] = None
 
     # --- mutable runtime state (not constructor args) ---
-    status:   StageStatus               = field(default=StageStatus.PENDING, init=False)
-    duration: float                     = field(default=0.0,                 init=False)
-    error:    Optional[Exception]       = field(default=None,                init=False)
+    status: StageStatus = field(default=StageStatus.PENDING, init=False)
+    duration: float = field(default=0.0, init=False)
+    error: Optional[Exception] = field(default=None, init=False)
 
 
 # ---------------------------------------------------------------------------
 # BootReport — collects per-stage results and aggregate metrics
 # ---------------------------------------------------------------------------
+
 
 class BootReport:
     """
@@ -81,9 +84,9 @@ class BootReport:
     """
 
     def __init__(self) -> None:
-        self._stages:         list[BootStage] = []
-        self._start_time:     float           = time.perf_counter()
-        self.total_duration:  float           = 0.0
+        self._stages: list[BootStage] = []
+        self._start_time: float = time.perf_counter()
+        self.total_duration: float = 0.0
 
     # --- called by BootSequencer ---
 
@@ -111,16 +114,17 @@ class BootReport:
         )
 
     def __repr__(self) -> str:  # pragma: no cover
-        ok   = self.count(StageStatus.OK)
+        ok = self.count(StageStatus.OK)
         fail = self.count(StageStatus.FAILED)
         skip = self.count(StageStatus.SKIPPED)
-        ms   = self.total_duration * 1000
+        ms = self.total_duration * 1000
         return f"<BootReport ok={ok} failed={fail} skipped={skip} total={ms:.1f}ms>"
 
 
 # ---------------------------------------------------------------------------
 # BootFailure — raised when a required stage fails
 # ---------------------------------------------------------------------------
+
 
 class BootFailure(RuntimeError):
     """

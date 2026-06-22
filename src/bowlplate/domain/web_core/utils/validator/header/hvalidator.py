@@ -59,8 +59,8 @@ class Header:
             resp_origin = self.origin_validator(origin=self.origin)
             resp_referrer = self.referrer_validator(referrer=self.referer)
 
-            #CSRFLogger.vsilent(resp_origin)
-            #CSRFLogger.vsilent(resp_referrer)
+            # CSRFLogger.vsilent(resp_origin)
+            # CSRFLogger.vsilent(resp_referrer)
 
             if resp_origin and resp_referrer:
                 return True, "Valid"

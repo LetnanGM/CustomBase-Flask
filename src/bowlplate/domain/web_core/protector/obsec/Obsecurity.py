@@ -9,8 +9,12 @@ from flask import Flask, abort, jsonify, request
 
 from domain.web_core.bootstrap import obs_logger
 from domain.web_core.data.configuration.security.config_obsecurity import (
-    bad_ua_patterns, default_config, fake_headers_config, honeypot_routes,
-    server_fake)
+    bad_ua_patterns,
+    default_config,
+    fake_headers_config,
+    honeypot_routes,
+    server_fake,
+)
 
 
 class OBSecurity:

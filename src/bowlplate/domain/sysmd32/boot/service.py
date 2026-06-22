@@ -1,8 +1,15 @@
 import sys
 import time
 
-from .model import (_RESET, _STATUS_COLOR, _STATUS_SYMBOL, BootFailure,
-                    BootReport, BootStage, StageStatus)
+from .model import (
+    _RESET,
+    _STATUS_COLOR,
+    _STATUS_SYMBOL,
+    BootFailure,
+    BootReport,
+    BootStage,
+    StageStatus,
+)
 
 
 class BootSequencer:

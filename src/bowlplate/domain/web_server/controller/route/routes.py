@@ -10,12 +10,14 @@ from share.shared.logger.server_logger import ServerLogger
 read = reader()
 service = read.get("service.json")["config"]
 
+
 @dataclass
 class Service:
     ADMIN_KEY: str = "ABC"
     MAINTENANCE = False
     SERVICE_TITLE = "APC"
     SERVICE_VERSION = "1.0.0"
+
 
 class routeState:
     cache: dict = {}
@@ -99,8 +101,6 @@ class RouteManager:
         def api_info():
             """API information endpoint"""
             return (
-                jsonify(
-                    {"version": Service.SERVICE_VERSION, "endpoints": []}
-                ),
+                jsonify({"version": Service.SERVICE_VERSION, "endpoints": []}),
                 200,
             )

@@ -3,8 +3,13 @@ from typing import Any, Dict
 from flask import Flask
 
 from domain.web_core.bootstrap import SMiddleware_logger, global_protection_logger
-from ....protector import (CSRFProtection, ErrorHandler, InputValidator,
-                           OBSecurity, RateLimiter)
+from ....protector import (
+    CSRFProtection,
+    ErrorHandler,
+    InputValidator,
+    OBSecurity,
+    RateLimiter,
+)
 from ....rendering.processor import ContextProcessor
 from .middleware import setup_securitychain
 

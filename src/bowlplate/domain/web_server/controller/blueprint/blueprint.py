@@ -5,8 +5,7 @@ from typing import Callable, Optional, Union
 
 from flask import Flask
 
-from .model import (BlueprintEntry, LoadTarget, RegistrationHooks,
-                    RegistrationPriority)
+from .model import BlueprintEntry, LoadTarget, RegistrationHooks, RegistrationPriority
 from .registry import BlueprintRegistry
 
 
@@ -47,7 +46,7 @@ class BlueprintManager:
         self._hooks = hooks or RegistrationHooks()
         self._isolate_errors = isolate_errors
         self._loader = BlueprintLoader(app)
-        
+
     def register_blueprints(self) -> RegistrationReport:
         """
         Registrasi semua blueprint dari registry.

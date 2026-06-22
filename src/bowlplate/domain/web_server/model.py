@@ -24,17 +24,15 @@ def banner() -> str:
 
 
 class ServerConfig(BaseModel):
-    """
-    
-    """
-    
-    host                  :   str
-    port                  :   int
-    debug                 :   bool
-    static_folder         :   str
-    template_folder       :   str
-    max_content_length    :   int
-    
+    """ """
+
+    host: str
+    port: int
+    debug: bool
+    static_folder: str
+    template_folder: str
+    max_content_length: int
+
     def __post_init__(self):
         """Validate configuration after initialization"""
         self._validate_host()

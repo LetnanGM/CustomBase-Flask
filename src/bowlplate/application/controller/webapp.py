@@ -28,7 +28,7 @@ class server(UI):
             debug=self._debug,
             max_content_length=16 * 1024 * 1024,
             host="127.0.0.1",
-            port=8000
+            port=8000,
         )
 
     def deploy(self) -> None:
