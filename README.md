@@ -107,29 +107,13 @@ python main.py
 
 Aplikasi akan berjalan di `http://localhost:5000`.
 
-> Untuk mengubah host atau port, edit file `data/configuration/internal/server/webapp.py`.
+> Untuk mengubah host atau port, edit file `src/bowlplate/data/config/server/server.json`.
 
 ---
 
 ## 🗂️ Project Structure
 
-```
-CustomBase-Flask/
-├── src/
-│   └── bowlplate/              # Core application package
-│       ├── bootstrap/          # Bootstrap & app initialization
-│       ├── data/
-│       │   └── configuration/
-│       │       └── internal/
-│       │           └── server/
-│       │               └── webapp.py   # Host & port config
-│       └── main.py             # Entry point
-├── requirements.txt            # pip dependencies
-├── requirements.yaml           # conda dependencies
-├── .gitignore
-├── changelog.md
-└── README.md
-```
+structure project terdapat pada [structure.md](./STRUCTURE.md)
 
 > ⚠️ Struktur ini masih dalam pengembangan dan akan diperbarui agar lebih scalable.
 
@@ -140,7 +124,7 @@ CustomBase-Flask/
 Salin file `.env.example` ke `.env` dan isi sesuai kebutuhan:
 
 ```bash
-cp .env.example .env
+cp ./src/bowlplate/.env.example ./src/bowlplate/.env
 ```
 
 ---
@@ -153,7 +137,7 @@ Versi terbaru: **v1.6.0** — Universal Configuration (SQLite3 & JSON data integ
 
 ---
 
-## ⚠️ Known Issues (v1.0.0)
+## ⚠️ Known Issues (v2.0.0)
 
 - Belum fully scalable
 - Proteksi masih level rendah
