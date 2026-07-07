@@ -13,6 +13,7 @@ from logging import Handler
 from bowlplate.contract.logger.logger import BaseLogger
 from bowlplate.support.style.color import Colors
 from bowlplate.support.time.date import date
+from bowlplate import BOWLPLATE_ROOT
 
 from .components import ExtraFormatter
 
@@ -27,11 +28,12 @@ class Logger(Handler, BaseLogger):
         self, log_file: str = "assets/logs/Application/Session-[time].log"
     ) -> None:
         super().__init__()
-        self.log_file = (
+        self.log_file = os.path.join(BOWLPLATE_ROOT, (
             log_file.replace("[time]", f"{date.get_date_as_ymd()}")
             if "[time]" in log_file
             else log_file
-        )
+        ))
+        
         self.logger: logging.Logger = None
         self.handlers = None
         self._setup_logger_()
