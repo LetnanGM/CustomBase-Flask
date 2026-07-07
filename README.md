@@ -1,7 +1,8 @@
 # CustomBase-Flask 🚀
 
 A flexible and customizable Flask-based boilerplate for building modern web applications — with clean architecture, environment config support, database integration, and a professional logger system built in.
-
+##### [ NOT RECOMMENDED USING FOR PROD OR OTHERS PROJECT ]
+##### [ THIS IS FOR LEARNING ]
 ---
 
 ## 📦 Tech Stack
