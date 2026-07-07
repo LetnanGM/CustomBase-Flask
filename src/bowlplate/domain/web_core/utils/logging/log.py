@@ -1,4 +1,4 @@
-from share.shared.logger.print import Logger
+from share.builtns.logger.print import Logger
 
 protector_logger = Logger(
     log_file="assets/logs/Protector/protect/Session-protector-[time].log"

@@ -1,7 +1,7 @@
 from bootstrap.bootstrap import blueprint
 from bootstrap.config import reader
 
-from share.shared.logger.print import Logger
+from share.builtns.logger.print import Logger
 
 register = blueprint.registerFunc()
 
@@ -22,15 +22,23 @@ class plugin:
     def _internal(self) -> bool:
         from ..controller.security import Security
         from .private import guardian
+        from .private.flaskSecurity.main import Middleware
 
         read = reader()
 
         data = read.get("security.json")
         data = data["config"]["properties"]
 
-        if data["SECURITY_ALTAR"]:
+        if data["SECURITY_ALTAR"] and data["SECURITY_PLUGIN"]:
+            raise RuntimeError("two different security can't be combined!!")
+
+        if data["SECURITY_ALTAR"] and data["SECURITY_PLUGIN"] is False:
             register(Security.setup)
             self._log.debug("'SecurityMiddleware' internal package registered!")
+
+        if data["SECURITY_PLUGIN"] and data["SECURITY_ALTAR"] is False:
+            register(Middleware().setup)
+            self._log.debug("'CommunityMiddleware' internal package registered!")
 
         if data["GUARDIAN_CRASH"]:
             register(guardian.setup)

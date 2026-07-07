@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 
-from share.contract.database.Storage import Storage
+from bowlplate.contract.database.Storage import Storage
 
 
 class database_context:

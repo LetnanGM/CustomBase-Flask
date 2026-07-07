@@ -3,7 +3,7 @@ from typing import Callable, List, Optional
 
 from flask import abort, request, session
 
-from ...utils.logging.childLogger import protector_logger
+from ...bootstrap import protector_logger
 
 
 def require_auth(allowed_roles: Optional[List[str]] = None):

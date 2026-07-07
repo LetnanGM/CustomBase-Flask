@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from share.support.parser.url import URLParse as URLHelper
+from support.parser.url import URLParse as URLHelper
 
 from domain.web_core.bootstrap import SecurityConfig
 

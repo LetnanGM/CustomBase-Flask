@@ -25,34 +25,41 @@ CustomBase-Flask is a starter template that provides a solid foundation for Flas
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/LetnanGM/CustomBase-Flask.git
 cd CustomBase-Flask
 ```
 
 2. Create a virtual environment:
+
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 if you use conda:
+
 ```bash
 conda install --yes --file requirements.yaml
 ```
 
 ### Running the Application
+
 `src` folder is all of ecosystem application, change the directory after install dependencies.
+
 ```bash
 cd src/
 ```
 
 then run this
+
 ```bash
 python main.py
 ```
@@ -62,8 +69,9 @@ you can change the host and port on `data/configuration/internal/server/webapp.p
 
 ## Project Structure
 
-
 wait update on structure, we will make it scalable and no errors about import ;D
+maybe, the structure project we will created on [structure](./STRUCTURE.md)
+
 ```
 CustomBase-Flask/
 ├── app.py              # Main application entry point

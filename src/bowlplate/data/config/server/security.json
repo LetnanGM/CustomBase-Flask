@@ -8,7 +8,8 @@
 
     "config": {
         "properties": {
-            "SECURITY_ALTAR": true,
+            "SECURITY_PLUGIN": true,
+            "SECURITY_ALTAR": false,
             "GUARDIAN_CRASH": true
         }
     }

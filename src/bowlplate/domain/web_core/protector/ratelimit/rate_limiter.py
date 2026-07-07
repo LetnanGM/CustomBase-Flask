@@ -25,9 +25,9 @@ class RateLimiter:
     Advanced rate limiter with distributed attack detection.
 
     Orchestrates:
-      - RateLimiterStore       (all mutable state)
+      - RateLimiterStore           (all mutable state)
       - DistributedAttackDetector  (coordinated-attack logic)
-      - PatternAnalyzer        (per-IP anomaly detection)
+      - PatternAnalyzer            (per-IP anomaly detection)
     """
 
     def __init__(self):

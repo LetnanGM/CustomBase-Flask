@@ -1,14 +1,18 @@
 from bootstrap.sql import SQLite, Database
-from share.shared.handler.decorator import validate_parameter
+from share.builtns.handler.decorator import validate_parameter
 
 
 class state:
+    from data import database_path
+    import os
+
     loaded: bool = False
+    db: str = os.path.join(database_path, "config.db")
 
 
 class DBase:
     def __init__(self):
-        self.db: Database = SQLite("data/database/config.db").get_db
+        self.db: Database = SQLite(state.db).get_db
 
         self.cur = self.db.cur
         self.con = self.db.conn

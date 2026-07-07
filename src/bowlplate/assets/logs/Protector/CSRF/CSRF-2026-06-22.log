@@ -1,2 +1,0 @@
-2026-06-22 14:11:46,797 - DEBUG - 🔐 New CSRF token generated for IP: 127.0.0.1| extra=ip='127.0.0.1', token='4A-3g76Zf3Ke50e0...', asctime='2026-06-22 14:11:46,797'
-2026-06-22 14:12:12,081 - DEBUG - 🔐 New CSRF token generated for IP: 127.0.0.1| extra=ip='127.0.0.1', token='iyC2hVCFJzTsACzS...', asctime='2026-06-22 14:12:12,081'

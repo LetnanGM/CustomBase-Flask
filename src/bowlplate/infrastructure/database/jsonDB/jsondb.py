@@ -1,6 +1,6 @@
 from typing import Any
 
-from share.contract.database.Storage import Storage
+from bowlplate.contract.database.Storage import Storage
 
 from .components.crud import OperateC
 
@@ -22,7 +22,7 @@ class JsonDB(OperateC, Storage):
         """
         Handling load database
         """
-        from share.support.file import File
+        from support.file import File
 
         instance = File(path_file=self._path)
         response = instance.Read()
@@ -34,7 +34,7 @@ class JsonDB(OperateC, Storage):
         """
         Handling write database
         """
-        from share.support.file import File
+        from support.file import File
 
         self._ensure_loaded()
         File(path_file=self._path).Write(Message=self._db).to_json

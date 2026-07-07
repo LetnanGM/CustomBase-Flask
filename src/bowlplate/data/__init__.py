@@ -1,5 +1,7 @@
-from pathlib import Path
+from bowlplate import BOWLPLATE_ROOT
+import os
 
-config_path = str(Path("./data/config").resolve())
-database_path = str(Path("./data/database").resolve())
-temp_path = str(Path("./data/temp").resolve())
+_DATA = "data"
+config_path = BOWLPLATE_ROOT / _DATA / "config"
+database_path = BOWLPLATE_ROOT / _DATA / "database"
+temp_path = BOWLPLATE_ROOT / _DATA / "temp"

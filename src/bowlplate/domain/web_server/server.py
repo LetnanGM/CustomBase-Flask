@@ -6,8 +6,8 @@ from dataclasses import dataclass
 
 from flask import Flask
 
-from share.contract.serverapp import ServerApp
-from share.shared.logger.print import Logger
+from contract.serverapp import ServerApp
+from share.builtns.logger.print import Logger
 
 from ..sysmd32.boot.service import BootReport, BootSequencer, BootStage
 from .controller.blueprint.blueprint import (
@@ -130,7 +130,7 @@ class FlaskServer(ServerApp):
     def run(self) -> None:
         import time
 
-        from share.support.os.termutil import clean_output
+        from support.os.termutil import clean_output
 
         time.sleep(2)
         clean_output()

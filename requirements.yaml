@@ -1,11 +1,30 @@
-name: Baseplate_project
+name: bowlplate
+
+channels:
+  - conda-forge
+  - defaults
+
 dependencies:
+  - python>=3.11
+
+  # Core
+  - flask>=3.0.0
   - aiohttp
   - bleach
-  - Flask
   - psutil
   - pydantic
   - python-dotenv
-  - Requests
-  - SQLAlchemy
-  - Werkzeug
+  - requests
+  - sqlalchemy
+  - werkzeug
+
+  # Dev
+  - pytest>=8.0.0
+  - pyyaml>=6.0
+
+  # Must be installed packages
+  - flask-cors>=4.0.0
+  - flask-limiter>=3.5.0
+  - flask-talisman>=1.1.0
+  - flask-compress>=1.14
+  - flask-caching>=2.1.0
