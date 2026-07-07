@@ -6,17 +6,17 @@ A flexible and customizable Flask-based boilerplate for building modern web appl
 
 ## 📦 Tech Stack
 
-| Package | Purpose |
-|---|---|
-| `Flask` | Core web framework |
-| `SQLAlchemy` | Database ORM |
+| Package         | Purpose                         |
+| --------------- | ------------------------------- |
+| `Flask`         | Core web framework              |
+| `SQLAlchemy`    | Database ORM                    |
 | `python-dotenv` | Environment variable management |
-| `Werkzeug` | Utilities & security helpers |
-| `pydantic` | Data validation |
-| `aiohttp` | Async HTTP client |
-| `bleach` | Input sanitization |
-| `psutil` | System monitoring |
-| `Requests` | HTTP requests |
+| `Werkzeug`      | Utilities & security helpers    |
+| `pydantic`      | Data validation                 |
+| `aiohttp`       | Async HTTP client               |
+| `bleach`        | Input sanitization              |
+| `psutil`        | System monitoring               |
+| `Requests`      | HTTP requests                   |
 
 ---
 
@@ -44,7 +44,6 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 ```
 
 3. Install dependencies:
-<<<<<<< HEAD
 
 ```bash
 pip install -r requirements.txt
@@ -52,9 +51,6 @@ pip install -r requirements.txt
 
 if you use conda:
 
-=======
-
->>>>>>> c1ba714ced7ffd45efec76d4babeea160a126d06
 ```bash
 # pip
 pip install -r requirements.txt
@@ -63,7 +59,6 @@ pip install -r requirements.txt
 conda install --yes --file requirements.yaml
 ```
 
-<<<<<<< HEAD
 ### Running the Application
 
 `src` folder is all of ecosystem application, change the directory after install dependencies.
@@ -79,34 +74,19 @@ python main.py
 ```
 
 The application will start at `http://localhost:5000`
-you can change the host and port on `data/configuration/internal/server/webapp.py'
+you can change the host and port on `data/config/server/server.json'
 
 ## Project Structure
 
 wait update on structure, we will make it scalable and no errors about import ;D
-maybe, the structure project we will created on [structure](./STRUCTURE.md)
 
-```
-CustomBase-Flask/
-├── app.py              # Main application entry point
-├── requirements.txt    # Project dependencies
-├── .env.example        # Environment variables template
-├── README.md          # This file
-├── CONTRIBUTOR.md     # Contribution guidelines
-└── src/
-    ├── __init__.py
-    ├── config.py      # Configuration management
-    ├── routes/        # Route definitions
-    ├── models/        # Database models
-    └── utils/         # Utility functions
-```
+the structure project created on [structure](./STRUCTURE.md)
 
 ## Configuration
 
 Copy `.env.example` to `.env` and update with your settings:
-=======
+
 4. Copy the environment config:
->>>>>>> c1ba714ced7ffd45efec76d4babeea160a126d06
 
 ```bash
 cp .env.example .env
