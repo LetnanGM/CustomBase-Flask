@@ -4,8 +4,8 @@ from dataclasses import dataclass
 
 from flask import Flask, jsonify, render_template, request
 
-from bootstrap.config import reader
-from share.builtns.logger.server_logger import ServerLogger
+from bowlplate.bootstrap.config import reader
+from bowlplate.share.builtns.logger.server_logger import ServerLogger
 
 read = reader()
 service = read.get("service.json")["config"]

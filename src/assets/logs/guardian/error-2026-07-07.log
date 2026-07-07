@@ -1,0 +1,17 @@
+2026-07-07 10:23:49,473 - DEBUG - >>> UNHANDLED EXCEPTION CAUGHT (Server still running) <<<
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v2.0.0\src\bowlplate\main.py", line 10, in <module>
+    main()
+    ~~~~^^
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v2.0.0\src\bowlplate\main.py", line 7, in main
+    serve.deploy()
+    ~~~~~~~~~~~~^^
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v2.0.0\src\bowlplate\application\controller\webapp.py", line 43, in deploy
+    instance.run()  # run server
+    ~~~~~~~~~~~~^^
+  File "G:\user\u0_a257\Project\passed\base_project\highend_base_v2.0.0\src\bowlplate\domain\web_server\server.py", line 133, in run
+    from support.os.termutil import clean_output
+ModuleNotFoundError: No module named 'support'
+| extra=taskName=None, asctime='2026-07-07 10:23:49,473'

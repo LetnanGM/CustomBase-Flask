@@ -20,8 +20,6 @@ class SQLite:
             db_path = Path(db)
             db_path.parent.mkdir(parents=True, exist_ok=True)
 
-        print(db)
-
         self._conn: Connection = connect(db)
         self.cur = self._conn.cursor()
 

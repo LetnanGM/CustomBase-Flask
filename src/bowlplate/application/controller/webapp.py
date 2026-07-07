@@ -1,6 +1,6 @@
 import os
 
-from bootstrap.bootstrap import UI, Server, ServerConfig, WebController
+from bowlplate.bootstrap.bootstrap import UI, Server, ServerConfig, WebController
 
 __all__ = ["ServerConfig"]
 

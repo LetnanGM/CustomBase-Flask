@@ -1,9 +1,9 @@
-from bootstrap.sql import SQLite, Database
-from share.builtns.handler.decorator import validate_parameter
+from bowlplate.bootstrap.sql import SQLite, Database
+from bowlplate.share.builtns.handler.decorator import validate_parameter
 
 
 class state:
-    from data import database_path
+    from bowlplate.data import database_path
     import os
 
     loaded: bool = False
@@ -88,7 +88,7 @@ SELECT value FROM config WHERE key=?
 
 class reader:
     def __init__(self) -> None:
-        from data import config_path
+        from bowlplate.data import config_path
 
         self._config_path = config_path
         self.suffix = "json"

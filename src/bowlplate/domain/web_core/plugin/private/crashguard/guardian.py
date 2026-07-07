@@ -4,7 +4,7 @@ from typing import Any
 
 from flask import Flask
 
-from share.builtns.logger.print import Logger
+from bowlplate.share.builtns.logger.print import Logger
 
 GuardianLogger = Logger(log_file="assets/logs/guardian/error-[time].log")
 

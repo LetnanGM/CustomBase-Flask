@@ -6,10 +6,10 @@ from dataclasses import dataclass
 
 from flask import Flask
 
-from contract.serverapp import ServerApp
-from share.builtns.logger.print import Logger
+from bowlplate.contract.serverapp import ServerApp
+from bowlplate.share.builtns.logger.print import Logger
 
-from ..sysmd32.boot.service import BootReport, BootSequencer, BootStage
+from bowlplate.domain.sysmd32.boot.service import BootReport, BootSequencer, BootStage
 from .controller.blueprint.blueprint import (
     BlueprintManager,
     BlueprintRegistry,
@@ -130,7 +130,7 @@ class FlaskServer(ServerApp):
     def run(self) -> None:
         import time
 
-        from support.os.termutil import clean_output
+        from bowlplate.support.os.termutil import clean_output
 
         time.sleep(2)
         clean_output()

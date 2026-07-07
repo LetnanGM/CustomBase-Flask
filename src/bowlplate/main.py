@@ -1,6 +1,6 @@
 # MAIN SECTION -
 
-from bootstrap.bootstrap import WebServer
+from .bootstrap.bootstrap import WebServer
 
 def main():
     serve = WebServer()(config=None)

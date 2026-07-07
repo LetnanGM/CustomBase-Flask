@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from bootstrap.bootstrap import ServerConfig
-from share.builtns.logger.server_logger import ServerLogger
+from bowlplate.bootstrap.bootstrap import ServerConfig
+from bowlplate.share.builtns.logger.server_logger import ServerLogger
 
 
 class ServerApp(ABC):
