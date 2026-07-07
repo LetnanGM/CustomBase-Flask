@@ -60,23 +60,6 @@ pip install -r requirements.txt
 conda install --yes --file requirements.yaml
 ```
 
-### Running the Application
-
-`src` folder is all of ecosystem application, change the directory after install dependencies.
-
-```bash
-cd src/
-```
-
-then run this
-
-```bash
-python main.py
-```
-
-The application will start at `http://localhost:5000`
-you can change the host and port on `data/config/server/server.json'
-
 ## Project Structure
 
 wait update on structure, we will make it scalable and no errors about import ;D
