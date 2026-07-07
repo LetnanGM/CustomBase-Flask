@@ -1,6 +1,10 @@
 .git
 __pycache__/
+<<<<<<< HEAD
 .pytest_cache/
+=======
+src/bowlplate/.env
+>>>>>>> c1ba714ced7ffd45efec76d4babeea160a126d06
 .ruff_cache
 .vscode
 
