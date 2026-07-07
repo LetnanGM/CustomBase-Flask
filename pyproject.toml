@@ -1,2 +1,9 @@
 [tool.pytest.ini_options]
 pythonpath = ["./src"]
+
+[project]
+name = "bowlplate"
+version = "2.0.0"
+
+[project.scripts]
+bowlplate = "src.bowlplate.main:main"

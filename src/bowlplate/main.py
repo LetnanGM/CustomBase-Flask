@@ -2,6 +2,9 @@
 
 from bootstrap.bootstrap import WebServer
 
-if __name__ == "__main__":
+def main():
     serve = WebServer()(config=None)
     serve.deploy()
+
+if __name__ == "__main__":
+    main()
