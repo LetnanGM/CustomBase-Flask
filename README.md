@@ -102,7 +102,7 @@ Semua ekosistem aplikasi ada di folder `src/`. Masuk dulu ke sana:
 
 ```bash
 cd src/
-python main.py
+python -m bowlplate.main
 ```
 
 Aplikasi akan berjalan di `http://localhost:5000`.
@@ -144,6 +144,8 @@ Versi terbaru: **v1.6.0** — Universal Configuration (SQLite3 & JSON data integ
 - Rate limit bisa di-bypass
 - Form belum aman
 - Web login belum aman
+
+- run harus di folder /src/
 
 Issues di atas sedang dalam roadmap pengembangan.
 
